@@ -14,8 +14,36 @@ var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/userRoutes/users');
 var addFriendsRouter = require('./routes/addFriends/add');
 var friendsRouter = require('./routes/friendRoutes/friends');
+var wsRouter = require('./routes/webSocket/wsRouter');
 
 var app = express();
+
+//引用socket.io
+var server = require('http').Server(app);
+var io = require('socket.io')(server);
+//socket.io配置
+// app.use(function(req,res,next){
+//   res.io = io;
+//   next();
+// });
+//引用dao层
+var websocketDao = require('./dao/websocket/websocketDao');
+io.on('connection',function(socket){
+  console.log(socket.id)
+  //确认连接已连接
+  socket.on('sureConnect',function(data){
+    websocketDao.matchUser(data,socket);
+  });
+  //接收聊天信息
+  socket.on('message',function(data){
+    websocketDao.message(data,socket);
+    // socket.emit('remessage',data);
+  });
+  socket.on('test2',function(data){
+    console.log(data);
+    socket.emit('retest2',{data:"test2"});
+  });
+});
 
 // 模板开始
 app.set('views', path.join(__dirname, 'views'));
@@ -27,6 +55,7 @@ app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/add-friends',addFriendsRouter);
 app.use('/friends',friendsRouter);
+app.use('/websocket',wsRouter);
 
 app.use(logger('dev'));
 app.use(express.json());
@@ -53,6 +82,9 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
-
+//socket.io端口配置
+var port = 3111;
+app.set('port',port);
+server.listen(port);
 
 module.exports = app;

@@ -14,6 +14,8 @@ import '../../static/css/common.css'
 //引入swiper
 import VueAwesomeSwiper from 'vue-awesome-swiper'
 import  'swiper/dist/css/swiper.css'
+//引入socket.io
+import VueSocketio from 'vue-socket.io';
 //引入阿里矢量图标
 import './assets/iconfont/iconfont.css'
 
@@ -28,6 +30,7 @@ Vue.config.productionTip = false
 //全局应用部分
 Vue.use(ElementUI)
 Vue.use(VueAwesomeSwiper)
+Vue.use(new VueSocketio({debug:true,connection:'http://localhost:3111'}))
 
 //全局应用自定义过滤器
 Object.keys(customFilter).forEach(key => {

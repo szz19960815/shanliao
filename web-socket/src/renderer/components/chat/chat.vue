@@ -3,7 +3,7 @@
 		<!-- <span @click="back">这是聊天</span> -->
 		<list-component type="chat">
 			<div style="flex: 1;overflow: auto;">
-				<div class="listCard" v-for="(card,index) in list" @click="chatSelect(index,card)" :class="{active:index==current}">
+				<div class="listCard" v-for="(card,index) in list" @click="chatSelect(index,card)" :key="index" :class="{active:index==current}">
 					<div class="cardImg">
 						<img src="../../../../static/img/icon.png">
 					</div>
@@ -17,13 +17,14 @@
 				</div>
 			</div>
 		</list-component>
-		<chat-window></chat-window>
+		<chat-window :user="selectUser" v-if="hasSelectUser"></chat-window>
 	</div>
 </template>
 
 <script>
 	import listComponent from '../common/listComponent';
 	import chatWindow from './chatWindow';
+	// import io from "socket.io";
 	export default {
 		name: 'chat',
 		components: {
@@ -32,6 +33,10 @@
 		},
 		data() {
 			return {
+				//是否已经选中聊天用户
+				hasSelectUser:false,
+				//选中的聊天用户
+				selectUser:{},
 				list: [{
 						img: 123,
 						name: '哈哈',
@@ -62,6 +67,8 @@
 			},
 			chatSelect(index,card){
 				this.current = index;
+				this.selectUser = card;
+				// this.$socket.connect();
 			},
 			//获取好友列表
 			getFriendsList(){
@@ -78,6 +85,18 @@
 					}
 				}).catch();
 			}
+		},
+		watch:{
+			selectUser:function(){
+				if(this.selectUser != {} && this.selectUser != null && this.selectUser != ''){
+					this.hasSelectUser = true;
+				}else{
+					this.hasSelectUser = false;
+				}
+			}
+		},
+		beforeMount(){
+			// this.selectUser = this.list[0];
 		},
 		mounted(){
 			this.getFriendsList();
