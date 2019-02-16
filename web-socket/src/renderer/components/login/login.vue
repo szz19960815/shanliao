@@ -107,6 +107,9 @@
 import drag from "electron-drag";
 import io from "socket.io";
 import { swiper, swiperSlide } from "vue-awesome-swiper";
+import Vue from 'vue';
+//引入socket.io
+import VueSocketio from 'vue-socket.io';
 export default {
   name: "login",
   data() {
@@ -305,6 +308,8 @@ export default {
                 if (this.checked) {
                   localStorage.setItem("username", JSON.stringify(value));
                 }
+                Vue.use(new VueSocketio({debug:true,connection:'http://localhost:3111'}));
+                this.$socket.emit("sureConnect",{currentUser:JSON.parse(localStorage.getItem("username")).userId});
                 this.$router.push({ path: "/home" });
               } else {
                 this.$message({

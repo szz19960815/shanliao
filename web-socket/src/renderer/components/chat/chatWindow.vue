@@ -17,15 +17,17 @@
       <div
         v-for="(info,index) in infoArr"
         :key="index"
-        style="display:flex;justify-content: space-between;position:relative;min-height:80px;overflow:auto;"
+        style="display:flex;justify-content: space-between;position:relative;min-height:80px;"
       >
         <div class="messageCard" v-if="info.type == 'receive'">
           <div class="messageUser">
             <img src="../../../../static/img/icon.png">
           </div>
           <div class="messageBubble">{{info.information_content}}</div>
+          <div style="margin-left:3px;display:flex;align-items:flex-end;font-size:11px;color:rgb(136,136,136);">{{info.send_at | timeStamp}}</div>
         </div>
         <div class="messageCard messageRight" v-if="info.type == 'send'">
+          <div style="margin-right:3px;display:flex;align-items:flex-end;font-size:11px;color:rgb(136,136,136);">{{info.send_at | timeStamp}}</div>
           <div class="messageBubble">{{info.information_content}}</div>
           <div class="messageUser">
             <img src="../../../../static/img/icon.png">
@@ -78,6 +80,9 @@
 
 <script>
 import io from "socket.io";
+import Vue from 'vue';
+//引入socket.io
+import VueSocketio from 'vue-socket.io';
 export default {
   name: "chatWindow",
   props: {
@@ -98,13 +103,13 @@ export default {
     connect: function() {
       // console.log("连接");
       this.id = this.$socket.id;
-      this.$socket.emit("sureConnect",{currentUser:JSON.parse(localStorage.getItem("username")).userId});
+      // this.$socket.emit("sureConnect",{currentUser:JSON.parse(localStorage.getItem("username")).userId});
     },
     rematch:function(val){
       console.log(val);
     },
     remessage: function(val) {
-      // console.log(val);
+      console.log(val);
       if (val.code == 1) {
         if (
           val.data.sender_id ==
@@ -132,6 +137,11 @@ export default {
     },
     //消息发送
     sendMsg(e) {
+      if(this.$socket == undefined){
+        Vue.use(new VueSocketio({debug:true,connection:'http://localhost:3111'}));
+        this.sendMsg(e);
+      }
+      // console.log(this.$socket);
       if (e.ctrlKey == false) {
         e.preventDefault();
         if (this.information != "" && this.information != null) {
@@ -141,6 +151,7 @@ export default {
             information: this.information
           };
           this.$socket.emit("message", info);
+          this.$socket.emit("sureConnect",{currentUser:JSON.parse(localStorage.getItem("username")).userId});
         } else {
           return;
         }
@@ -266,7 +277,7 @@ textarea {
   margin-bottom: 20px;
   max-width: 1000px;
   min-width: 300px;
-  height: 40px;
+  /* height: 40px; */
   /* overflow: hidden; */
   display: flex;
 }
@@ -279,6 +290,7 @@ textarea {
 .messageUser {
   width: 40px;
   height: 40px;
+  min-width: 40px;
   border-radius: 3px;
   background: white;
   margin-right: 20px;

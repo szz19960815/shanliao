@@ -29,14 +29,14 @@ var io = require('socket.io')(server);
 //引用dao层
 var websocketDao = require('./dao/websocket/websocketDao');
 io.on('connection',function(socket){
-  console.log(socket.id)
   //确认连接已连接
   socket.on('sureConnect',function(data){
+    // console.log(socket.id);
     websocketDao.matchUser(data,socket);
   });
   //接收聊天信息
   socket.on('message',function(data){
-    websocketDao.message(data,socket);
+    websocketDao.message(data,socket,io);
     // socket.emit('remessage',data);
   });
   socket.on('test2',function(data){

@@ -30,7 +30,7 @@ Vue.config.productionTip = false
 //全局应用部分
 Vue.use(ElementUI)
 Vue.use(VueAwesomeSwiper)
-Vue.use(new VueSocketio({debug:true,connection:'http://localhost:3111'}))
+// Vue.use(new VueSocketio({debug:true,connection:'http://localhost:3111'}))
 
 //全局应用自定义过滤器
 Object.keys(customFilter).forEach(key => {
