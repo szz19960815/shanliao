@@ -120,8 +120,8 @@ var getMessage = function (param, res, next) {
             connection.release();
             return;
         }
-        // select * from user_information_record where sender_id=? and receiver_id=?
-        connection.query($sql.queryId, [param.userId, param.userId], function (err, result) {
+        // select * from user_information_record where (sender_id=? and receiver_id=?) OR (receiver_id=? and sender_id=?) order by send_at asc
+        connection.query($sql.queryId, [param.userId, param.friendId, param.userId, param.friendId], function (err, result) {
             if (err) {
                 jsonWrite(res, {}, 0, "获取失败");
                 connection.release();

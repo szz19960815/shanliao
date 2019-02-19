@@ -56,14 +56,14 @@ var add = function (req, res, next) {
                     return;
                 } else {
                     //随机生成uid
-                    var uid = ($uuid.v4()).replace(/-/g,"");
+                    var uid = ($uuid.v4()).replace(/-/g, "");
                     var username = param.username;
                     //密码使用md5双重加密
                     var password = $md5($md5(param.pass).substr(8, 6) + 224 + $md5(param.pass) + $md5('szz'));
                     var register_at = (new Date().getTime()).toString();
                     //建立连接，向表中插入值
                     // INSERT INTO user_info(userId,username,password) VALUES(?,?,?,?)
-                    connection.query($sql.insert, [uid, username, password,register_at], function (err, result) {
+                    connection.query($sql.insert, [uid, username, password, register_at], function (err, result) {
                         if (err) {
                             jsonWrite(res, {}, 0, "注册失败");
                             connection.release();
@@ -96,29 +96,34 @@ var match = function (req, res, next) {
     }
     //建立连接查询
     pool.getConnection(function (err, connection) {
+        if (err) {
+            jsonWrite(res, {}, 0, "登录连接失败");
+            console.log(err);
+            return;
+        }
+        // select * from user_info where username=? limit 1
         connection.query($sql.queryUsername, [param.username], function (err, result) {
             if (err) {
-                if (err) {
-                    jsonWrite(res, {}, 0, "登录失败");
-                    connection.release();
-                }
+                jsonWrite(res, {}, 0, "登录失败");
+                connection.release();
+                return;
             }
             if (result) {
                 var username = param.username;
                 //密码使用md5双重加密
                 var password = $md5($md5(param.pass).substr(8, 6) + 224 + $md5(param.pass) + $md5('szz'));
                 result = result[0];
-                if(!result.username === username){
+                if (!result.username === username) {
                     jsonWrite(res, {}, 0, "登录失败，用户名错误！");
                     connection.release();
                     return;
                 }
-                if(!result.password === password){
+                if (!result.password === password) {
                     jsonWrite(res, {}, 0, "登录失败，密码错误!");
                     connection.release();
                     return;
                 }
-                jsonWrite(res, {userId:result.userId,username:result.username}, 1, "登录成功！");
+                jsonWrite(res, { userId: result.userId, username: result.username }, 1, "登录成功！");
                 connection.release();
                 return;
             }
