@@ -1,0 +1,52 @@
+@charset "utf-8";
+/*reset*/
+body,button,input,select,textarea{font:100%/1 "Helvetica Neue",Helvetica,STHeiTi,"Microsoft YaHei";}
+body,h1,h2,h3,h4,h5,h6,dl,dt,dd,ul,ol,li,th,td,p,blockquote,pre,form,fieldset,legend,input,button,textarea,article,aside,footer,header,hgroup,nav,section,menu{margin:0; padding:0;-webkit-text-size-adjust:100%;}
+table{border-collapse:collapse;border-spacing:0;}
+em,i{font-style:normal;}
+li{list-style:none;}
+img{border:0;}
+input,img{vertical-align:middle;}
+article,aside,footer,header,hgroup,nav,section,menu{display:block;}
+a{text-decoration:none;}
+.clearfix:after{content:"";display:block;height:0;clear:both;visibility:hidden;}
+html,body{height:100%;-webkit-text-size-adjust:100%;-webkit-font-smoothing:antialiased;width: 100%;box-sizing: border-box;display: flex;}
+a,input,textarea{-webkit-tap-highlight-color:rgba(0,0,0,0);tap-highlight-color:rgba(0,0,0,0);outline:none; -webkit-font-smoothing:antialiased}
+#root{width:100%;height:100%;flex: 1;display: flex;display: -webkit-flex;box-sizing: border-box;}
+/* ie下隐藏滚动条 */
+HTML {  
+  scrollbar-base-color: #fff;  
+  scrollbar-base-color: #fff;  
+  scrollbar-3dlight-color: #fff;  
+  scrollbar-highlight-color: #fff;  
+  scrollbar-track-color: #fff;  
+  scrollbar-arrow-color: #fff;  
+  scrollbar-shadow-color: #fff;  
+  scrollbar-dark-shadow-color: #fff;  
+} 
+*::-webkit-scrollbar { width: 0 !important }
+
+html{
+	font-size: 20px;
+}
+@media only screen and (min-width: 320px) {
+  html {
+    font-size: 17.778px !important; } }
+@media only screen and (min-width: 360px) {
+  html {
+    font-size: 20px !important; } }
+@media only screen and (min-width: 375px) {
+  html {
+    font-size: 20.83px !important; } }
+@media only screen and (min-width: 400px) {
+  html {
+    font-size: 22.22px !important; } }
+@media only screen and (min-width: 412px) {
+  html {
+    font-size: 22.89px !important; } }
+@media only screen and (min-width: 414px) {
+  html {
+    font-size: 23px !important; } }
+@media only screen and (min-width: 640px) {
+  html {
+    font-size: 35.56px !important; } }

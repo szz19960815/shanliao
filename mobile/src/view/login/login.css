@@ -1,0 +1,31 @@
+@charset 'utf-8';
+
+#login{
+    width: 100%;
+    height: 100%;
+    background: url("../../static/image/login_bg.jpg") no-repeat center center;
+    background-size: 100% 100%;
+    display: flex;
+    display: -webkit-flex;
+    justify-content: center;
+    align-items: center;
+}
+#login .panel{
+    width: 80%;
+    height: 20rem;
+    background: white;
+    border-radius: 1rem;
+    box-shadow: 0.3rem 0.3rem 1rem 0.3rem rgba(0,0,0,0.5);
+    display: flex;
+    display: -webkit-flex;
+    flex-direction: column;
+    align-items: center;
+}
+#login .panel .panelBtn{
+    margin-top: 1.5rem;
+}
+#login .panel .panelForm{
+    flex: 1;
+    width: 80%;
+    margin: 1rem;
+}
