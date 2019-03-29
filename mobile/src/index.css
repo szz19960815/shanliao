@@ -26,6 +26,15 @@ HTML {
 } 
 *::-webkit-scrollbar { width: 0 !important }
 
+/* 图标字体大小 */
+i{
+  font-size: 1.2rem !important;
+  color: #333333 !important;
+}
+i.active{
+  color: #108ee9 !important;
+}
+
 html{
 	font-size: 20px;
 }

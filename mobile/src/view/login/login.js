@@ -1,61 +1,78 @@
 import React, { Component } from 'react';
-import { Form, Icon, Input, Button, Checkbox, } from 'antd';
-import { Link } from 'react-router-dom';
-import http from '../../static/js/server';
+import { InputItem, List, WhiteSpace, Checkbox, Flex, Button } from 'antd-mobile';
+import { createForm } from 'rc-form';
+import * as axios from 'axios';
+
+import '../../static/iconfont/iconfont.css';
+// import http from '../../static/js/server';
+
+const CheckboxItem = Checkbox.CheckboxItem;
+const AgreeItem = Checkbox.AgreeItem;
 
 class LoginForm extends Component {
     constructor(arg) {
         super(arg);
-    }
-    login(e) {
-        e.preventDefault();
-        this.props.form.validateFields((err, values) => {
-            if (!err) {
-                // console.log('Received values of form: ', values);
-                this.postData(values);
-            }
-        });
+        this.state = {
+            isusername: "",
+            ispass: "",
+            remember: true
+        }
     }
     async postData(config) {
-        const res = await http.post('/user/login', config);
-        console.log(res);
+        console.log(this.props)
+        // axios.post("/users/login", config).then((res) => {
+        //     console.log(res);
+        // }).catch((err) => {
+        //     console.log(err);
+        // })
+    }
+    onChange = (e) => {
+        console.log(e);
     }
     render() {
-        const { getFieldDecorator } = this.props.form;
+        const { getFieldProps } = this.props.form;
+        const data = [
+            { value: 0, label: 'Ph.D.' },
+            { value: 1, label: 'Bachelor' },
+            { value: 2, label: 'College diploma' },
+        ];
         return (
-            <Form onSubmit={this.login.bind(this)} className="login-form">
-                <Form.Item>
-                    {getFieldDecorator('userName', {
-                        rules: [{ required: true, message: '请输入用户名!' }],
-                    })(
-                        <Input prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Username" />
-                    )}
-                </Form.Item>
-                <Form.Item>
-                    {getFieldDecorator('password', {
-                        rules: [{ required: true, message: '请输入登录密码!' }],
-                    })(
-                        <Input prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />} type="password" placeholder="Password" />
-                    )}
-                </Form.Item>
-                <Form.Item>
-                    {getFieldDecorator('remember', {
-                        valuePropName: 'checked',
-                        initialValue: true,
-                    })(
-                        <Checkbox>Remember me</Checkbox>
-                    )}
-                    <div><Button type="primary" block htmlType="submit" className="login-form-button">
-                        Log in
-                    </Button></div>
-                    <div className="flex_between">
-                        <Link to="/forget" className="login-form-forgot">Forgot password</Link>
-                        <a className='login-form-forgot' onTouchEnd={this.props.isRegister}>register now!</a>
-                    </div>
-                </Form.Item>
-            </Form>
+            <div>
+                <WhiteSpace />
+                <List className="loginList">
+                    <InputItem
+                        {...getFieldProps('inputtitle2')}
+                        placeholder="username"
+                        clear
+                        maxLength="16"
+                        onFocus={() => { this.setState({ isusername: 'active' }) }}
+                        onBlur={() => { this.setState({ isusername: '' }) }}
+                    >
+                        {/* <div style={{ backgroundImage: 'url(https://zos.alipayobjects.com/rmsportal/DfkJHaJGgMghpXdqNaKF.png)', backgroundSize: 'cover', height: '22px', width: '22px' }} /> */}
+                        <i className={"iconfont icon-yonghuming " + this.state.username} style={{ color: "#108ee9" }}></i>
+                    </InputItem>
+                    <InputItem
+                        {...getFieldProps('password')}
+                        type="password"
+                        placeholder="password"
+                        onFocus={() => { this.setState({ ispass: 'active' }) }}
+                        onBlur={() => { this.setState({ ispass: '' }) }}
+                    >
+                        <i className={"iconfont icon-mima " + this.state.pass} style={{ color: "#108ee9" }}></i>
+                    </InputItem>
+
+                </List>
+                <Flex>
+                    <Flex.Item>
+                        <AgreeItem checked={this.state.remember} data-seed="logId" onChange={() => { this.setState({ remember: !(this.state.remember) }) }}>
+                            <span style={{ fontSize: ".6rem" }}>Remember me</span>
+                        </AgreeItem>
+                    </Flex.Item>
+                </Flex>
+                <Button onClick={this.postData.bind(this)} size="small" className="loginBtn" type="primary">Login</Button>
+            </div>
         );
     }
 }
-const Login = Form.create({ name: 'LoginForm' })(LoginForm);
+const Login = createForm()(LoginForm);
 export default Login;

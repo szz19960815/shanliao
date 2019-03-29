@@ -12,7 +12,7 @@
 }
 #login .panel{
     width: 80%;
-    height: 20rem;
+    height: 15rem;
     background: white;
     border-radius: 1rem;
     box-shadow: 0.3rem 0.3rem 1rem 0.3rem rgba(0,0,0,0.5);
@@ -20,12 +20,40 @@
     display: -webkit-flex;
     flex-direction: column;
     align-items: center;
+    overflow: hidden;
+    padding: 1.5rem 0;
 }
 #login .panel .panelBtn{
     margin-top: 1.5rem;
+    display: flex;
+    display: -webkit-flex;
+    flex-direction: column;
+    align-items: center;
 }
 #login .panel .panelForm{
-    flex: 1;
+    box-sizing: border-box;
+    height: 100%;
     width: 80%;
-    margin: 1rem;
+    margin: 0 auto;
+    margin-top: 1.5rem;
+    display: flex;
+    display: -webkit-flex;
+    flex-direction: column;
+    align-items: center;
+}
+.loginBtn{
+    margin-top: 2rem;
+}
+/* remeber me */
+.am-list-item{
+    font-size: 0.1rem;
+    padding-left: 0;
+}
+
+/* antd-mobile重置样式 */
+.am-list-item .am-input-label.am-input-label-5{
+    width: 25px;
+}
+.am-list-item.am-input-item,.am-list-item{
+    padding-left: 10px;
 }

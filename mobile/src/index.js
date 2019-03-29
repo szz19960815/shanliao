@@ -2,6 +2,8 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
+import 'antd-mobile';
+import './static/js/http';
 // import * as serviceWorker from './serviceWorker';
 import { BrowserRouter } from 'react-router-dom';
 console.log(React);

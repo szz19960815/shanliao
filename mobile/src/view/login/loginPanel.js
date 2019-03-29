@@ -1,11 +1,14 @@
 import React, { Component } from 'react';
-import { Radio } from 'antd';
+import { Tabs } from 'antd-mobile';
 
 import Login from './login';
 import Register from './register';
 
-const RadioButton = Radio.Button;
-const RadioGroup = Radio.Group;
+const tabs = [
+    { title: "Login" },
+    { title: "Register" },
+];
+
 
 class LoginPanel extends Component {
     constructor(arg) {
@@ -20,7 +23,7 @@ class LoginPanel extends Component {
         });
         console.log(this.state);
     }
-    changeRegister(event){
+    changeRegister(event) {
         console.log(event)
         this.setState({
             current: 'register'
@@ -29,16 +32,14 @@ class LoginPanel extends Component {
     render() {
         return (
             <div className="panel">
-                <RadioGroup onChange={this.onChange.bind(this)} value={this.state.current} className="panelBtn">
-                    <RadioButton value="login">登录</RadioButton>
-                    <RadioButton value="register">注册</RadioButton>
-                </RadioGroup>
-                <div className="panelForm">
-                    {
-                        this.state.current === "login" ? (<Login isRegister={this.changeRegister.bind(this)}></Login>) :
-                            this.state.current === "register" ? (<Register></Register>) : false
-                    }
-                </div>
+                <Tabs tabs={tabs} className="panelBtn" swipeable={false}>
+                    <div className="panelForm">
+                        <Login isRegister={this.changeRegister.bind(this)}></Login>
+                    </div>
+                    <div className="panelForm">
+                        <Register></Register>
+                    </div>
+                </Tabs>
             </div>
         );
     }
