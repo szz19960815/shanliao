@@ -79,8 +79,11 @@
     "customize-cra": "^0.2.12",
     "less": "^3.9.0",
     "less-loader": "^4.1.0",
+    "prop-types": "^15.7.2",
     "rc-form": "^2.4.3",
-    "react-app-rewired": "^2.1.1"
+    "react-animated-router": "^0.1.12",
+    "react-app-rewired": "^2.1.1",
+    "react-transition-group": "^2.7.1"
   },
   "jest": {
     "collectCoverageFrom": [

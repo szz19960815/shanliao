@@ -49,7 +49,16 @@
     font-size: 0.1rem;
     padding-left: 0;
 }
-
+.am-checkbox-inner{
+    width: 16px;
+    height: 16px;
+    top: 15px;
+}
+.am-checkbox-inner:after{
+    height: 8px;
+    width: 3px;
+    right: 5px;
+}
 /* antd-mobile重置样式 */
 .am-list-item .am-input-label.am-input-label-5{
     width: 25px;

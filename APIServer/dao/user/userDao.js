@@ -113,12 +113,12 @@ var match = function (req, res, next) {
                 //密码使用md5双重加密
                 var password = $md5($md5(param.pass).substr(8, 6) + 224 + $md5(param.pass) + $md5('szz'));
                 result = result[0];
-                if (!result.username === username) {
+                if (result.username !== username) {
                     jsonWrite(res, {}, 0, "登录失败，用户名错误！");
                     connection.release();
                     return;
                 }
-                if (!result.password === password) {
+                if (result.password !== password) {
                     jsonWrite(res, {}, 0, "登录失败，密码错误!");
                     connection.release();
                     return;
